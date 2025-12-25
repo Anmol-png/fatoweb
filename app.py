@@ -1,14 +1,20 @@
 import streamlit as st
 from PIL import Image, ImageOps
+import numpy as np
 
-st.title("Halki Image Processing App")
+st.title("Live Mobile Camera Input App")
+st.write("Camera se photo capture karo aur grayscale dekho!")
 
-uploaded_file = st.file_uploader("Upload an image", type=["jpg", "png", "jpeg"])
+# Camera input widget
+camera_image = st.camera_input("Take a picture")
 
-if uploaded_file:
-    image = Image.open(uploaded_file)
-    st.image(image, caption="Original Image", use_column_width=True)
+if camera_image:
+    # PIL image me convert
+    img = Image.open(camera_image)
     
-    # Grayscale conversion without cv2
-    img_gray = ImageOps.grayscale(image)
+    # Show original image
+    st.image(img, caption="Original Image", use_column_width=True)
+    
+    # Convert to grayscale
+    img_gray = ImageOps.grayscale(img)
     st.image(img_gray, caption="Grayscale Image", use_column_width=True)
